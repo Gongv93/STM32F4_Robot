@@ -29,7 +29,7 @@ public class CommandParser {
 			throw new CommandException(cmdLine);
 		}
 		
-		cmd = getWord(cmdLine, 0, spaceIndex-1);
+		cmd = getWord(cmdLine, 0, spaceIndex);
 		
 		try {
 			time = Integer.parseInt( getWord(cmdLine, spaceIndex+1, cmdLine.length()) );
@@ -39,16 +39,24 @@ public class CommandParser {
 	}
 	
 	private String getWord(String s, int offset, int end) {
+		// Returns a string from offset to end
 		String retString;
 		retString = new String();
 		int i;
 		
-		for( i=0; i < end; i++ ) {
+		for( i=offset; i < end; i++ ) {
 			retString += s.charAt(i);
 		}
 		
 		return retString;
 	}
 	
+	public String getCmd() {
+		return cmd;
+	}
+	
+	public int getTime() {
+		return time;
+	}
 	
 }

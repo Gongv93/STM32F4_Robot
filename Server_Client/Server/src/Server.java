@@ -7,66 +7,61 @@ import java.net.Socket;
 
 
 public class Server {
+	
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
 		Socket connSocket = null;
 		PrintWriter out = null;
 		BufferedReader in = null;
+		CommandParser cmdParser = null;
 		String inputLine;
-		String command;
-		int i;
 
-		
 		try {
 			serverSocket = new ServerSocket(10101);
+			connSocket = serverSocket.accept();
+			out = new PrintWriter(connSocket.getOutputStream(), true); 
+
+			in = new BufferedReader(
+					new InputStreamReader(
+							connSocket.getInputStream()));
+			
+			inputLine = in.readLine();
+				
+			System.out.println( "Server In: " + inputLine );
+			
+			// Parse command line to get the command and the time
+			try {
+				cmdParser = new CommandParser(inputLine);
+			} catch (CommandException e) {
+				out.println( "Command did not match format." );
+				e.printStackTrace();
+			}
+			
+			
+			System.out.println("command: " + cmdParser.getCmd() + "\nTime: " + cmdParser.getTime() );
+			out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+		
+			
+			System.out.println( "Goodbye" );
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Couldn't create server socket.");
 		}
 		
-		while(true) {
-			try {
-				connSocket = serverSocket.accept();
-			} catch(IOException e) {
-				System.out.println("Accept failed.");
-				System.exit(1);
+		try {
+			if(in!=null) {
+				in.close();
 			}
-			
-			try {
-				out = new PrintWriter(connSocket.getOutputStream(), true);  //get the socket's output stream and wrap in a PrintWriter for convenience
-	
-				in = new BufferedReader(
-						new InputStreamReader(
-								connSocket.getInputStream()));  //Get the socket's input stream and wrap in BufferedReader
-				
-				inputLine = in.readLine();
-				
-				
-				
-				
-				
-			} catch(IOException e) {
-				e.printStackTrace();
+			if(out!=null) {
+				out.close();
 			}
-			finally
-			{
-				try {
-					if(in!=null)
-					{
-						in.close();
-					}
-					if(out!=null)
-					{
-						out.close();
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
+	
+
+
 	}
 }
