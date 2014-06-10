@@ -12,25 +12,33 @@ public class Client {
 		Socket clientSocket = null;
 		String inputLine;
 		String returnLine;
-		String host = "127.0.0.1";
-		int port = 10101;
+		String host;
+		int port;
 
 		PrintWriter out = null;
 		Scanner sock_in = null;
 		Scanner in = null;
 		
-		try {
-			clientSocket = new Socket(host, port);  //create new socket connected to host on port 10101
-		} catch (IOException e) {
-			System.err.println("Could not connect to " + host + " on port: "+port);
-			System.exit(1);
-		}
+		// Localhost 127.0.0.1
 		
 		try {
-			out = new PrintWriter(clientSocket.getOutputStream(), true);  //get output stream and wrap in PrintWriter for convenience
-			sock_in = new Scanner( new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));  //get socket input stream (and wrap in BuffereReader for efficiency, wrap in Scanner for convenience)
 			
 			in = new Scanner(System.in);
+			
+			System.out.println( "Enter IP: " );
+			host = in.nextLine();
+			System.out.println( "Enter Port" );
+			port = in.nextInt();
+			
+			System.out.println( "Attempting to connect...");
+			clientSocket = new Socket(host, port);
+			
+			System.out.println( "Connected!" );
+			
+			out = new PrintWriter(clientSocket.getOutputStream(), true);  //get output stream and wrap in PrintWriter for convenience
+			sock_in = new Scanner( new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));  //get socket input stream (and wrap in BuffereReader for efficiency, wrap in Scanner for convenience)
+
+			inputLine = in.nextLine();
 			
 			while(true) {
 
@@ -54,7 +62,8 @@ public class Client {
 		}
 		
 		catch (IOException e) {
-			
+			System.err.println("Could not connect");
+			System.exit(1);
 		}
 		finally {
 			if(in!=null)

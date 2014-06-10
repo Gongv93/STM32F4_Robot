@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 
 public class Server {
@@ -13,12 +14,24 @@ public class Server {
 		Socket connSocket = null;
 		PrintWriter out = null;
 		BufferedReader in = null;
+		Scanner getInput = null;
 		CommandParser cmdParser = null;
 		String inputLine;
-
+		int port;
+		
+		getInput = new Scanner( System.in );
+		
+		System.out.println( "Enter port:" );
+		port = getInput.nextInt();
+		
 		try {
-			serverSocket = new ServerSocket(10101);
+			
+			System.out.println( "Attempting to create server socket...");
+			serverSocket = new ServerSocket(port);
+			System.out.println( "SUCCESS!\nWaiting to connect..." );
 			connSocket = serverSocket.accept();
+			System.out.println( "SUCCESS!" );
+			
 			out = new PrintWriter(connSocket.getOutputStream(), true); 
 
 			in = new BufferedReader(
@@ -38,18 +51,16 @@ public class Server {
 					cmdParser = new CommandParser(inputLine);
 				} catch (CommandException e) {
 					out.println( "Command did not match format." );
-					e.printStackTrace();
 				}
 				
-				System.out.println("command: " + cmdParser.getCmd() + "\nTime: " + cmdParser.getTime() );
-				out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+				System.out.println("command: " + cmdParser.getCmd() + "\nTime: " + cmdParser.getTime() + "\n" );
+				out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() + "\n" );
 		
 			}
 			
 			System.out.println( "Goodbye" );
 		
 		} catch (IOException e) {
-			e.printStackTrace();
 			System.out.println("Couldn't create server socket.");
 		}
 		
