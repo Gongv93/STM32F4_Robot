@@ -25,22 +25,26 @@ public class Server {
 					new InputStreamReader(
 							connSocket.getInputStream()));
 			
-			inputLine = in.readLine();
+			while( (inputLine = in.readLine().toString()) != null ) {
 				
-			System.out.println( "Server In: " + inputLine );
-			
-			// Parse command line to get the command and the time
-			try {
-				cmdParser = new CommandParser(inputLine);
-			} catch (CommandException e) {
-				out.println( "Command did not match format." );
-				e.printStackTrace();
-			}
-			
-			
-			System.out.println("command: " + cmdParser.getCmd() + "\nTime: " + cmdParser.getTime() );
-			out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+				System.out.println( "Server In: " + inputLine );
+				
+				if( inputLine.matches("exit") ) {
+					break;
+				}
+				
+				// Parse command line to get the command and the time
+				try {
+					cmdParser = new CommandParser(inputLine);
+				} catch (CommandException e) {
+					out.println( "Command did not match format." );
+					e.printStackTrace();
+				}
+				
+				System.out.println("command: " + cmdParser.getCmd() + "\nTime: " + cmdParser.getTime() );
+				out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
 		
+			}
 			
 			System.out.println( "Goodbye" );
 		

@@ -31,14 +31,22 @@ public class Client {
 			sock_in = new Scanner( new BufferedReader(new InputStreamReader(clientSocket.getInputStream())));  //get socket input stream (and wrap in BuffereReader for efficiency, wrap in Scanner for convenience)
 			
 			in = new Scanner(System.in);
+			
+			while(true) {
 
-			inputLine = in.nextLine();
+				inputLine = in.nextLine();
+				
+				out.println(inputLine);
+				
+				if( inputLine.matches("exit") ) {
+					break;
+				}
+				
+				returnLine = sock_in.nextLine();
+				
+				System.out.println( returnLine );
 			
-			out.println(inputLine);
-			
-			returnLine = sock_in.nextLine();
-			
-			System.out.println( returnLine );
+			}
 			
 			in.close();
 			clientSocket.close();
