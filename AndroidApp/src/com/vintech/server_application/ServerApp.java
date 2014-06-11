@@ -65,16 +65,24 @@ public class ServerApp extends Activity {
 						// Get port
 						//port = Integer.parseInt(portET.toString());
 						try {
-							serverSocket = new ServerSocket(10101);
-							//statusTV.setText("Waiting on connection.");
+							// Creates Server socket
+							serverSocket = new ServerSocket(10101);	
+							changeText( statusTV, "Waiting for Connection..." );
+							
+							// Wait for handshake
 							Socket connSocket = serverSocket.accept();
-							//statusTV.setText("ON");
+							changeText( statusTV, "ON" );
+							
 							
 							out = new PrintWriter(connSocket.getOutputStream(), true); 
 							in = new BufferedReader(
 									new InputStreamReader(
 											connSocket.getInputStream()));
 
+							// Loop where we get input from the client
+							// If we input "exit" then we close the server
+							// If we don't have the right format we return and error
+							// If we do have the right format we echo the command back
 							while( (inputLine = in.readLine().toString()) != null ) {
 								Log.i( "Input String", inputLine );
 								if( inputLine.matches("exit") ) {
@@ -84,23 +92,27 @@ public class ServerApp extends Activity {
 								// Parse command line to get the command and the time
 								try {
 									cmdParser = new CommandParser(inputLine);
+									changeText( currentCommandTV, "command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+									Log.i( "Output String", "command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+									out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
+									Log.i( "Output String", "Outed" );
 								} catch (CommandException e) {
+									out.println( "Command did not match format." );
+									changeText( currentCommandTV, "Command did not match format." );
 									Log.i( "Error", "Command did not match format." );
 								}
 								
-								//currentCommandTV.setText( "command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
-								Log.i( "Output String", "command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
-								out.println("command: " + cmdParser.getCmd() + ", Time: " + cmdParser.getTime() );
-								Log.i( "Output String", "Outed" );
-								
 							}
 							
-							//statusTV.setText("OFF");
+							// When the server closes we change the text to let the user know
+							changeText( currentCommandTV, "Waiting for command." );
+							changeText( statusTV, "OFF" );
 						
 						} catch (IOException e) {
-							//currentCommandTV.setText( "Couldn't create server socket." );
+							changeText( statusTV, "Couldn't create server socket." );
 						}
 						
+						// Closes connections
 						try {
 							if(in!=null) {
 								in.close();
@@ -113,6 +125,8 @@ public class ServerApp extends Activity {
 						}
 					}
 				};
+				
+				// Starts the thread
 				Thread myThread = new Thread(runnable);
 				myThread.start();
 		
@@ -120,6 +134,16 @@ public class ServerApp extends Activity {
 			
 		});
 		
+	}
+	
+	private void changeText( final TextView TV, final String s ) {
+		// Changes and textview on the app
+		runOnUiThread( new Runnable() {
+			@Override
+			public void run() {
+				TV.setText(s);
+			}
+		});
 	}
 	
 	@Override
