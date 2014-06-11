@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Server_Application</string>
+    <string name="app_name">Server Application</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="commandTextView">Command: </string>
+    <string name="currentCommandTextView">Waiting for command.</string>
+	<string name="statusTextView">Status: </string>
+	<string name="portTextView">Port:</string>
+	<string name="defaultPortEditText">10101</string>
+	<string name="currentStatusTextView">OFF</string>
+    <string name="startButton">Start</string>
+	
 </resources>

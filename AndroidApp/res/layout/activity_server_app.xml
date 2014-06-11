@@ -8,15 +8,68 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ServerApp" >
 
-    <EditText
-        android:id="@+id/editText1"
+    <TextView
+        android:id="@+id/commandTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        android:text="@string/commandTextView" />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/commandTextView"
+        android:layout_below="@+id/commandTextView"
+        android:text="@string/statusTextView" />
+
+    <TextView
+        android:id="@+id/currentCommandTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/statusTextView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/currentCommandTextView" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/portEditText"
+        android:text="@string/startButton" />
+
+    <TextView
+        android:id="@+id/portTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/portEditText"
+        android:layout_alignBottom="@+id/portEditText"
+        android:layout_toRightOf="@+id/statusTextView"
+        android:text="@string/portTextView" />
+
+    <EditText
+        android:id="@+id/portEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/startButton"
+        android:layout_alignBottom="@+id/startButton"
+        android:layout_alignLeft="@+id/currentTextView"
+        android:ems="5"
+        android:inputType="number"
+        android:text="@string/defaultPortEditText" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/currentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/statusTextView"
+        android:layout_alignBottom="@+id/statusTextView"
+        android:layout_alignLeft="@+id/currentCommandTextView"
+        android:text="@string/currentStatusTextView" />
 
 </RelativeLayout>
