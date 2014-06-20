@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc 4.6.2 mingw32 -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -IE:\My Documents\WorkSpace\STM32F4-Robot\STM32F4\cmsis_lib -IE:\My Documents\WorkSpace\STM32F4-Robot\STM32F4 -IE:\My Documents\WorkSpace\STM32F4-Robot\STM32F4\cmsis_boot -IE:\My Documents\WorkSpace\STM32F4-Robot\STM32F4\cmsis_lib\include -IE:\My Documents\WorkSpace\STM32F4-Robot\STM32F4\cmsis -IE:\My Documents\WorkSpace\STM32F4-Robot">
+      <target file="stm32f4xx_rcc.o" lastModified="146b4db33c0">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="146b4db222f"/>
+      </target>
+      <target file="system_stm32f4xx.o" lastModified="146b4db34aa">
+         <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="146b4dab83c"/>
+      </target>
+      <target file="stm32f4xx_gpio.o" lastModified="146b4db3443">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="146b4db2216"/>
+      </target>
+      <target file="main.o" lastModified="146b59374a7">
+         <source file="..\..\..\main.c" lastModified="146b59369cc"/>
+      </target>
+      <target file="startup_stm32f4xx.o" lastModified="146b4db3285">
+         <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="146b4dab81e"/>
+      </target>
+   </processor>
+</history>
